@@ -1,8 +1,12 @@
+import {GameCanvas} from "./components/GameCanvas.tsx";
+
 function App() {
   return (
-    <div className={"flex items-center justify-center h-screen"}>
-      <p className={"text-cyan-300 text-6xl"}>DINO Runner</p>
-    </div>
+      <main className={
+          "w-screen h-screen bg-gradient-to-br from-[#87CEEB] via-[#5A9BD4] to-[#4682B4] flex justify-center items-center"
+      }>
+        <GameCanvas />
+    </main>
   )
 }
 
