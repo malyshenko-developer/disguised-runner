@@ -3,7 +3,7 @@ import {GameCanvas} from "./components/GameCanvas.tsx";
 function App() {
   return (
       <main className={
-          "w-screen h-screen bg-gradient-to-br from-[#87CEEB] via-[#5A9BD4] to-[#4682B4] flex justify-center items-center"
+          "w-screen h-screen bg-gradient-to-br from-[#111b24] via-[#1a2336] to-[#070e17] flex justify-center items-center"
       }>
         <GameCanvas />
     </main>
@@ -11,3 +11,4 @@ function App() {
 }
 
 export default App
+
