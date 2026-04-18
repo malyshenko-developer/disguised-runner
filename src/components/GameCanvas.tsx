@@ -1,40 +1,54 @@
+import {useEffect, useState} from "react";
 import {Application} from "@pixi/react";
-import {TextStyle} from "pixi.js";
+import {Assets, TextStyle, Texture} from "pixi.js";
 
 export const GameCanvas = () => {
-    return (
-        <Application width={1200} height={600} backgroundColor={"#87CEEB"} className={"border-2 border-[#4682B4] rounded"}>
-            {/*LINE OF GROUND*/}
-            <pixiGraphics
-                draw={(g) => {
-                    g.clear()
-                    g.setStrokeStyle({width: 4, color: 0xD2B48C})
-                    g.moveTo(0, 550)
-                    g.lineTo(1200, 550)
-                    g.stroke()
-                }}
-            />
+    const [textures, setTextures] = useState<{ [key: string]: Texture }>({});
 
-            {/*GROUND*/}
-            <pixiGraphics
-                draw={(g) => {
-                    g.clear()
-                    g.rect(0, 550, 1200, 50)
-                    g.fill(0x6B8E23)
-                }}
-            />
+    const layerOrder = [
+        'Layer_0011_0', 'Layer_0010_1', 'Layer_0009_2', 'Layer_0008_3',
+        'Layer_0007_Lights', 'Layer_0006_4', 'Layer_0005_5', 'Layer_0004_Lights',
+        'Layer_0003_6', 'Layer_0002_7', 'Layer_0001_8', 'Layer_0000_9'
+    ];
+
+    useEffect(() => {
+        layerOrder.forEach(name => {
+            Assets.load(`/sprites/background/${name}.png`).then(texture => {
+                setTextures(prev => ({ ...prev, [name]: texture }));
+            });
+        });
+    }, []);
+
+    return (
+        <Application width={1200} height={600} className="border-2 border-[#596E84] rounded">
+            {layerOrder.map((name) => {
+                const texture = textures[name];
+                if (!texture) return null;
+
+                return (
+                    <pixiTilingSprite
+                        key={name}
+                        texture={texture}
+                        tilePosition={{ x: 0, y: 620 }}
+                        width={1200}
+                        height={600}
+                        tileScale={{ x: 1, y: 1 }}
+                    />
+                );
+            })}
 
             <pixiText
-                text="DISGUISED RUNNER READY!"
+                text="DISGUISED RUNNING READY"
                 anchor={{ x: 0.5, y: 0.5 }}
                 x={600}
-                y={275}
+                y={225}
                 style={new TextStyle({
-                    fontFamily: 'Arial Black',
-                    fontSize: 52,
-                    fill: 0xFFFFFF
+                    fontFamily: 'Arial Black, Impact',
+                    fontSize: 48,
+                    fill: 0xE8F4FD,
+                    stroke: 0x1A2336,
+                    dropShadow: true,
                 })}
             />
         </Application>
-    )
-}
+    )};

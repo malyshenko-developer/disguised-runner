@@ -4,10 +4,14 @@ import {
     Container,
     Graphics,
     Text,
+    Sprite,
+    TilingSprite
 } from 'pixi.js';
 
 extend({
     Container,
     Graphics,
-    Text
+    Text,
+    Sprite,
+    TilingSprite
 })
