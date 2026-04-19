@@ -13,7 +13,7 @@ export const GameCanvas = () => {
 
     return (
         <Application width={1200} height={600} className="border-2 border-[#596E84] rounded">
-            <ParallaxBg scrollX={scrollX} setScrollX={setScrollX} />
+            <ParallaxBg scrollX={scrollX} setScrollX={setScrollX} gameRunning={gameRunning} />
 
             {!gameRunning && (
                 <PlayButton running={gameRunning} onToggle={toggleGame} />

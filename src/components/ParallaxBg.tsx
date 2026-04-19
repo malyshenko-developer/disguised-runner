@@ -5,9 +5,10 @@ import {Assets, Texture} from "pixi.js";
 interface ParallaxBgProps {
     scrollX: number;
     setScrollX : Dispatch<SetStateAction<number>>;
+    gameRunning: boolean
 }
 
-export const ParallaxBg = ({scrollX, setScrollX}: ParallaxBgProps) => {
+export const ParallaxBg = ({scrollX, setScrollX, gameRunning}: ParallaxBgProps) => {
     const [textures, setTextures] = useState<{ [key: string]: Texture }>({});
 
     const layerOrder = [
@@ -25,7 +26,9 @@ export const ParallaxBg = ({scrollX, setScrollX}: ParallaxBgProps) => {
     }, []);
 
     useTick((ticker) => {
-        setScrollX((s) => s +  2 * ticker.deltaTime)
+        if (gameRunning) {
+            setScrollX((s) => s +  2 * ticker.deltaTime)
+        }
     })
 
 
