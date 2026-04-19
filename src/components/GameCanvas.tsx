@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {Application} from "@pixi/react";
 import {Assets, TextStyle, Texture} from "pixi.js";
+import {Hero} from "./Hero.tsx";
 
 export const GameCanvas = () => {
     const [textures, setTextures] = useState<{ [key: string]: Texture }>({});
@@ -38,7 +39,7 @@ export const GameCanvas = () => {
             })}
 
             <pixiText
-                text="DISGUISED RUNNING READY"
+                text="DISGUISED RUNNER"
                 anchor={{ x: 0.5, y: 0.5 }}
                 x={600}
                 y={225}
@@ -50,5 +51,7 @@ export const GameCanvas = () => {
                     dropShadow: true,
                 })}
             />
+
+            <Hero />
         </Application>
     )};

@@ -5,7 +5,8 @@ import {
     Graphics,
     Text,
     Sprite,
-    TilingSprite
+    TilingSprite,
+    AnimatedSprite
 } from 'pixi.js';
 
 extend({
@@ -13,5 +14,6 @@ extend({
     Graphics,
     Text,
     Sprite,
-    TilingSprite
+    TilingSprite,
+    AnimatedSprite
 })
