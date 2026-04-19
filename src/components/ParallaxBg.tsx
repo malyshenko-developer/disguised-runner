@@ -1,10 +1,14 @@
-import {useEffect, useState} from "react";
+import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
 import {useTick} from "@pixi/react";
 import {Assets, Texture} from "pixi.js";
 
-export const ParallaxBg = () => {
+interface ParallaxBgProps {
+    scrollX: number;
+    setScrollX : Dispatch<SetStateAction<number>>;
+}
+
+export const ParallaxBg = ({scrollX, setScrollX}: ParallaxBgProps) => {
     const [textures, setTextures] = useState<{ [key: string]: Texture }>({});
-    const [scrollX, setScrollX] = useState(0);
 
     const layerOrder = [
         'Layer_0011_0', 'Layer_0010_1', 'Layer_0009_2', 'Layer_0008_3',
@@ -21,7 +25,7 @@ export const ParallaxBg = () => {
     }, []);
 
     useTick((ticker) => {
-        setScrollX(s => s +  2 * ticker.deltaTime)
+        setScrollX((s) => s +  2 * ticker.deltaTime)
     })
 
 
