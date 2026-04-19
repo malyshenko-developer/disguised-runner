@@ -37,15 +37,25 @@ export const Hero = ({running}: HeroProps) => {
     }, []);
 
     useEffect(() => {
-        if (running && animState !== "run") {
-            setAnimState("prerun")
-            setTimeout(() => setAnimState("run"), 200)
-        } else if (!running) {
-            setAnimState("idle")
+        if (running && animState === 'idle') {
+            setAnimState('prerun');
+        } else if (!running && animState !== 'idle') {
+            setAnimState('idle');
         }
     }, [running]);
 
-    useEffect(() => { spriteRef.current?.play(); }, [animState]);
+    useEffect(() => {
+        if (animState !== 'prerun' || !spriteRef.current) return;
+
+        spriteRef.current.onComplete = () => {
+            setAnimState('run');
+            spriteRef.current!.onComplete = null;
+        };
+    }, [animState]);
+
+    useEffect(() => {
+        spriteRef.current?.play();
+    }, [textures.length, animState]);
 
     const getTextures = () => {
         if (animState === 'idle') return textures.slice(0, 24);
@@ -56,6 +66,14 @@ export const Hero = ({running}: HeroProps) => {
     if (textures.length === 0) return null;
 
     return (
-        <pixiAnimatedSprite ref={spriteRef} textures={getTextures()} autoPlay animationSpeed={0.2} loop x={600} y={460} anchor={0.5} scale={0.4} />
+        <pixiAnimatedSprite
+            ref={spriteRef}
+            textures={getTextures()}
+            animationSpeed={0.2}
+            loop={animState !== 'prerun'}
+            x={600} y={460}
+            anchor={0.5}
+            scale={0.4}
+        />
     )
 }
