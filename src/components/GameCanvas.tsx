@@ -23,7 +23,7 @@ export const GameCanvas = () => {
             {/*    text="DISGUISED RUNNER"*/}
             {/*    anchor={{ x: 0.5, y: 0.5 }}*/}
             {/*    x={600}*/}
-            {/*    y={225}*/}
+            {/*    y={280}*/}
             {/*    style={new TextStyle({*/}
             {/*        fontFamily: 'Arial Black, Impact',*/}
             {/*        fontSize: 48,*/}
