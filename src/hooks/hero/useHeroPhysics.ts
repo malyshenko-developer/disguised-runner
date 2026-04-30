@@ -1,4 +1,4 @@
-import { useGameStore } from "../store/game.ts";
+import { useGameStore } from "../../store/game.ts";
 import { useEffect, useRef, useState } from "react";
 import { useTick } from "@pixi/react";
 
