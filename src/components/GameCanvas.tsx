@@ -48,7 +48,7 @@ const GameContent = () => {
         <>
             <ParallaxBg scrollX={scrollX} setScrollX={setScrollX} gameRunning={gameRunning} />
             {!gameRunning && <PlayButton running={gameRunning} onToggle={toggleGame} />}
-            <Hero scrollX={scrollX} running={gameRunning} />
+            <Hero />
             {enemies.map(enemy => (
                 <Enemy key={enemy.id} enemy={enemy} onDestroy={() => removeEnemy(enemy.id)} />
             ))}
