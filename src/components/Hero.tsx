@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {type AnimatedSprite, Assets, Texture} from "pixi.js";
 import {useTick} from "@pixi/react";
+import {useGameStore} from "../store/game.ts";
 
 const HERO_Y_BASE = 470
 
@@ -19,6 +20,8 @@ export const Hero = ({running}: HeroProps) => {
     const landingGrace = useRef(0);
     const canJump = useRef(true);
     const physics = useRef({ y: HERO_Y_BASE, vy: 0, grounded: true });
+
+    const updateHeroY = useGameStore(state => state.updateHeroY);
 
     useEffect(() => {
         if (textures.length === 0) {
@@ -110,6 +113,7 @@ export const Hero = ({running}: HeroProps) => {
         physics.current.vy += 800 * dt;
         physics.current.y += physics.current.vy * dt;
         setHeroY(physics.current.y);
+        updateHeroY(physics.current.y);
 
         if (jumpState === 'ground') {
             setJumpState('up');
@@ -122,6 +126,7 @@ export const Hero = ({running}: HeroProps) => {
             physics.current.vy = 0;
             physics.current.grounded = true;
             setHeroY(470)
+            updateHeroY(470);
 
             landingGrace.current = 400;
             canJump.current = false
