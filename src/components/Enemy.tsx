@@ -1,18 +1,20 @@
 import {useEffect, useRef, useState} from "react";
 import {type AnimatedSprite, Assets, Rectangle, Texture} from "pixi.js";
 import {useTick} from "@pixi/react";
+import {useGameStore, type Enemy as IEnemy} from "../store/game.ts";
 
 interface EnemyProps {
-    initialX: number
+    enemy: IEnemy
     onDestroy: () => void
 }
 
-export const Enemy = ({initialX, onDestroy}: EnemyProps) => {
+export const Enemy = ({enemy, onDestroy}: EnemyProps) => {
     const [textures, setTextures] = useState<Texture[]>([])
     const spriteRef = useRef<AnimatedSprite>(null)
 
+    const {updateEnemy } = useGameStore();
+
     const speed = 200
-    const [enemyX, setEnemyX] = useState(initialX)
 
     useEffect(() => {
         const promises = [];
@@ -30,8 +32,8 @@ export const Enemy = ({initialX, onDestroy}: EnemyProps) => {
 
     useTick((ticker) => {
         const dt = ticker.deltaMS / 1000
-        const newX = enemyX - speed * dt
-        setEnemyX(newX)
+        const newX = enemy.x - speed * dt
+        updateEnemy(enemy.id, newX);
 
         if (newX < -100) {
             onDestroy()
@@ -45,6 +47,6 @@ export const Enemy = ({initialX, onDestroy}: EnemyProps) => {
     if (textures.length === 0) return null;
 
     return (
-        <pixiAnimatedSprite ref={spriteRef} textures={textures} animationSpeed={0.25} loop x={enemyX} y={520} anchor={0.5} scale={1.4} />
+        <pixiAnimatedSprite ref={spriteRef} textures={textures} animationSpeed={0.25} loop x={enemy.x} y={520} anchor={0.5} scale={1.4} />
     )
 }
