@@ -9,14 +9,13 @@ import { useEnemyMovement } from "../hooks/enemy/useEnemyMovement.ts";
 
 interface EnemyProps {
   enemy: IEnemy;
-  onDestroy: () => void;
 }
 
-export const Enemy = ({ enemy, onDestroy }: EnemyProps) => {
+export const Enemy = ({ enemy }: EnemyProps) => {
   const textures = useEnemyTextures()
   const spriteRef = useRef<AnimatedSprite>(null);
 
-  useEnemyMovement(enemy, onDestroy);
+  useEnemyMovement(enemy);
 
   useEffect(() => {
     spriteRef.current?.play();

@@ -19,7 +19,7 @@ import {
 } from "../config/gameConfig.ts";
 
 const GameContent = () => {
-  const { gameRunning, enemies, heroY, setGameOver, startGame, removeEnemy } =
+  const { gameRunning, enemies, heroY, setGameOver, startGame } =
     useGameStore();
   const [scrollX, setScrollX] = useState(0);
 
@@ -72,7 +72,6 @@ const GameContent = () => {
         <Enemy
           key={enemy.id}
           enemy={enemy}
-          onDestroy={() => removeEnemy(enemy.id)}
         />
       ))}
     </>
