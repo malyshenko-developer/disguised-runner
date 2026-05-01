@@ -83,26 +83,17 @@ export const useHeroPhysics = (
     }
   });
 
-  useEffect(() => {
-    if (running) {
-      physics.current = { y: HERO_Y_BASE, vy: 0, grounded: true };
-      setHeroY(HERO_Y_BASE);
-      setJumpState("ground");
-      landingGrace.current = 0;
-      canJump.current = true;
-      updateHeroY(HERO_Y_BASE);
-    }
-  }, [running, updateHeroY]);
+  const resetPhysics = () => {
+    physics.current = { y: HERO_Y_BASE, vy: 0, grounded: true };
+    setHeroY(HERO_Y_BASE);
+    setJumpState("ground");
+    landingGrace.current = 0;
+    canJump.current = true;
+    updateHeroY(HERO_Y_BASE);
+  };
 
   useEffect(() => {
-    if (!running) {
-      physics.current = { y: HERO_Y_BASE, vy: 0, grounded: true };
-      setHeroY(HERO_Y_BASE);
-      setJumpState("ground");
-      landingGrace.current = 0;
-      canJump.current = true;
-      updateHeroY(HERO_Y_BASE);
-    }
+    resetPhysics()
   }, [running, updateHeroY]);
 
   const prerunCompleted = () => {
