@@ -15,13 +15,11 @@ import {
 import { useCollisionDetection } from "../hooks/useCollisionDetection.ts";
 
 const GameContent = () => {
-  const { gameRunning, enemies, startGame } =
+  const { gameRunning, enemies } =
     useGameStore();
   const [scrollX, setScrollX] = useState(0);
 
   useCollisionDetection();
-
-  const toggleGame = () => startGame();
 
   return (
     <>
@@ -31,7 +29,7 @@ const GameContent = () => {
         gameRunning={gameRunning}
       />
       {!gameRunning && (
-        <PlayButton running={gameRunning} onToggle={toggleGame} />
+        <PlayButton />
       )}
       <Hero />
       {enemies.map((enemy) => (

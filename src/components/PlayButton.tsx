@@ -1,31 +1,34 @@
 import { useEffect, useState } from "react";
 import { Assets, Texture } from "pixi.js";
+import { useGameStore } from "../store/game";
 
-interface PlayButtonProps {
-  running: boolean;
-  onToggle: () => void;
-}
+const PLAY_BUTTON_TEXTURE_PATH = "/sprites/ui/play.png";
+const PLAY_BUTTON_X = 600;
+const PLAY_BUTTON_Y = 180;
+const PLAY_BUTTON_WIDTH = 102;
+const PLAY_BUTTON_HEIGHT = 102;
 
-export const PlayButton = ({ running, onToggle }: PlayButtonProps) => {
+export const PlayButton = () => {
   const [texture, setTexture] = useState<Texture | null>(null);
+  const { gameRunning, startGame } = useGameStore();
 
   useEffect(() => {
-    Assets.load("/sprites/ui/play.png").then(setTexture);
+    Assets.load(PLAY_BUTTON_TEXTURE_PATH).then(setTexture);
   }, []);
 
-  if (!texture || running) return null;
+  if (!texture || gameRunning) return null;
 
   return (
     <pixiSprite
       texture={texture}
-      x={600}
-      y={180}
+      x={PLAY_BUTTON_X}
+      y={PLAY_BUTTON_Y}
       anchor={0.5}
-      width={102}
-      height={102}
+      width={PLAY_BUTTON_WIDTH}
+      height={PLAY_BUTTON_HEIGHT}
       eventMode="static"
       cursor="pointer"
-      onPointerDown={onToggle}
+      onPointerDown={startGame}
     />
   );
 };
