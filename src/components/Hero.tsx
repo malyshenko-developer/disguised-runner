@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { type AnimatedSprite } from "pixi.js";
 
 import { useHeroPhysics } from "../hooks/hero/useHeroPhysics.ts";
-import { useGameStore } from "../store/game.ts";
 import { useHeroTextures } from "../hooks/hero/useHeroTextures.ts";
+
+import { useGameStore } from "../store/game.ts";
 import { HERO_X } from "../config/gameConfig.ts";
 
 export const Hero = () => {
@@ -11,12 +12,15 @@ export const Hero = () => {
   const spriteRef = useRef<AnimatedSprite>(null);
 
   const { gameRunning } = useGameStore();
+  const textures = useHeroTextures();
+
+  const onLanding = useCallback(() => {
+    setAnimState("prerun");
+  }, []);
   const { heroY, jumpState, prerunCompleted } = useHeroPhysics(
     gameRunning,
-    setAnimState,
+    onLanding
   );
-
-  const textures = useHeroTextures();
 
   useEffect(() => {
     if (gameRunning && animState === "idle") {

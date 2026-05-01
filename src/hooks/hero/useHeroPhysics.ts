@@ -2,7 +2,7 @@ import { useGameStore } from "../../store/game.ts";
 import { useEffect, useRef, useState } from "react";
 import { useTick } from "@pixi/react";
 
-const HERO_Y_BASE = 470;
+import { HERO_Y_BASE } from "../../config/gameConfig.ts";
 
 interface UseHeroPhysicsReturn {
   heroY: number;
@@ -12,7 +12,7 @@ interface UseHeroPhysicsReturn {
 
 export const useHeroPhysics = (
   running: boolean,
-  setAnimState: (state: "idle" | "prerun" | "run") => void,
+  onLanding: () => void,
 ): UseHeroPhysicsReturn => {
   const updateHeroY = useGameStore((state) => state.updateHeroY);
 
@@ -49,7 +49,7 @@ export const useHeroPhysics = (
     if (landingGrace.current > 0) {
       landingGrace.current -= ticker.deltaMS;
       if (landingGrace.current <= 0) {
-        setAnimState("prerun");
+        onLanding()
         setJumpState("ground");
       }
       return;
@@ -91,9 +91,8 @@ export const useHeroPhysics = (
       landingGrace.current = 0;
       canJump.current = true;
       updateHeroY(HERO_Y_BASE);
-      setAnimState("idle");
     }
-  }, [running, setAnimState, updateHeroY]);
+  }, [running, updateHeroY]);
 
   useEffect(() => {
     if (!running) {
