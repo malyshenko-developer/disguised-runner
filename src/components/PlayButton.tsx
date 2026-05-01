@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Assets, Texture } from "pixi.js";
+
 import { useGameStore } from "../store/game";
 
 const PLAY_BUTTON_TEXTURE_PATH = "/sprites/ui/play.png";

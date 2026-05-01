@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Application } from "@pixi/react";
 
 import { Hero } from "./Hero.tsx";
@@ -8,35 +8,21 @@ import { Enemy } from "./Enemy.tsx";
 
 import { useGameStore } from "../store/game.ts";
 
-import {
-  CANVAS_HEIGHT,
-  CANVAS_WIDTH,
-} from "../config/gameConfig.ts";
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../config/gameConfig.ts";
 import { useCollisionDetection } from "../hooks/useCollisionDetection.ts";
 
 const GameContent = () => {
-  const { gameRunning, enemies } =
-    useGameStore();
-  const [scrollX, setScrollX] = useState(0);
+  const { gameRunning, enemies } = useGameStore();
 
   useCollisionDetection();
 
   return (
     <>
-      <ParallaxBg
-        scrollX={scrollX}
-        setScrollX={setScrollX}
-        gameRunning={gameRunning}
-      />
-      {!gameRunning && (
-        <PlayButton />
-      )}
+      <ParallaxBg />
+      {!gameRunning && <PlayButton />}
       <Hero />
       {enemies.map((enemy) => (
-        <Enemy
-          key={enemy.id}
-          enemy={enemy}
-        />
+        <Enemy key={enemy.id} enemy={enemy} />
       ))}
     </>
   );
