@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { type AnimatedSprite, Assets, Rectangle, Texture } from "pixi.js";
-import { useTick } from "@pixi/react";
+import { useEffect, useRef } from "react";
+import { type AnimatedSprite } from "pixi.js";
 
-import { useGameStore, type Enemy as IEnemy } from "../store/game.ts";
+import { type Enemy as IEnemy } from "../store/game.ts";
 
 import { ENEMY_SCALE, ENEMY_Y } from "../config/gameConfig.ts";
+import { useEnemyTextures } from "../hooks/enemy/useEnemyTextures.ts";
+import { useEnemyMovement } from "../hooks/enemy/useEnemyMovement.ts";
 
 interface EnemyProps {
   enemy: IEnemy;
@@ -12,37 +13,10 @@ interface EnemyProps {
 }
 
 export const Enemy = ({ enemy, onDestroy }: EnemyProps) => {
-  const [textures, setTextures] = useState<Texture[]>([]);
+  const textures = useEnemyTextures()
   const spriteRef = useRef<AnimatedSprite>(null);
 
-  const { updateEnemy } = useGameStore();
-
-  const speed = 200;
-
-  useEffect(() => {
-    const promises = [];
-    for (let i = 0; i < 8; i++) {
-      promises.push(
-        Assets.load("/sprites/enemies/mushroom/mushroom.png").then(
-          (texture) => {
-            const frame = new Rectangle(i * 80, 0, 80, 64);
-            return new Texture({ source: texture, frame });
-          },
-        ),
-      );
-    }
-    Promise.all(promises).then(setTextures);
-  }, []);
-
-  useTick((ticker) => {
-    const dt = ticker.deltaMS / 1000;
-    const newX = enemy.x - speed * dt;
-    updateEnemy(enemy.id, newX);
-
-    if (newX < -100) {
-      onDestroy();
-    }
-  });
+  useEnemyMovement(enemy, onDestroy);
 
   useEffect(() => {
     spriteRef.current?.play();
