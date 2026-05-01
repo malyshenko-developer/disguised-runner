@@ -2,6 +2,8 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { useTick } from "@pixi/react";
 import { Assets, Texture } from "pixi.js";
 
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../config/gameConfig.ts";
+
 interface ParallaxBgProps {
   scrollX: number;
   setScrollX: Dispatch<SetStateAction<number>>;
@@ -57,8 +59,8 @@ export const ParallaxBg = ({
             key={name}
             texture={texture}
             tilePosition={{ x: -scrollX * speed, y: 620 }}
-            width={1200}
-            height={600}
+            width={CANVAS_WIDTH}
+            height={CANVAS_HEIGHT}
             tileScale={{ x: 1, y: 1 }}
           />
         );

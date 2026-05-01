@@ -1,10 +1,22 @@
 import { useEffect, useState } from "react";
 import { Application, useTick } from "@pixi/react";
+
 import { Hero } from "./Hero.tsx";
 import { ParallaxBg } from "./ParallaxBg.tsx";
 import { PlayButton } from "./PlayButton.tsx";
 import { Enemy } from "./Enemy.tsx";
+
 import { useGameStore } from "../store/game.ts";
+
+import {
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+  ENEMY_HITBOX,
+  ENEMY_SCALE,
+  ENEMY_Y,
+  HERO_HITBOX,
+  HERO_X,
+} from "../config/gameConfig.ts";
 
 const GameContent = () => {
   const { gameRunning, enemies, heroY, setGameOver, startGame, removeEnemy } =
@@ -15,25 +27,21 @@ const GameContent = () => {
     if (!gameRunning) return;
     if (enemies.length === 0) return;
 
-    const heroHitbox = { width: 80, height: 100, offsetY: 20 };
-    const heroLeft = 600 - heroHitbox.width / 2;
-    const heroRight = 600 + heroHitbox.width / 2;
-    const heroTop = heroY + heroHitbox.offsetY - heroHitbox.height / 2;
-    const heroBottom = heroY + heroHitbox.offsetY + heroHitbox.height / 2;
+    const heroLeft = HERO_X - HERO_HITBOX.width / 2;
+    const heroRight = HERO_X + HERO_HITBOX.width / 2;
+    const heroTop = heroY + HERO_HITBOX.offsetY - HERO_HITBOX.height / 2;
+    const heroBottom = heroY + HERO_HITBOX.offsetY + HERO_HITBOX.height / 2;
 
     for (const enemy of enemies) {
-      const enemyScale = 1.4;
-      const spriteWidth = enemy.width * enemyScale;
-      const spriteHeight = enemy.height * enemyScale;
-      const hitboxScale = 0.5;
-      const enemyOffsetY = 15;
-      const hitboxWidth = spriteWidth * hitboxScale;
-      const hitboxHeight = spriteHeight * hitboxScale;
+      const spriteWidth = enemy.width * ENEMY_SCALE;
+      const spriteHeight = enemy.height * ENEMY_SCALE;
+      const hitboxWidth = spriteWidth * ENEMY_HITBOX.scale;
+      const hitboxHeight = spriteHeight * ENEMY_HITBOX.scale;
 
       const enemyLeft = enemy.x - hitboxWidth / 2;
       const enemyRight = enemy.x + hitboxWidth / 2;
-      const enemyTop = 520 + enemyOffsetY - hitboxHeight / 2;
-      const enemyBottom = 520 + enemyOffsetY + hitboxHeight / 2;
+      const enemyTop = ENEMY_Y + ENEMY_HITBOX.offsetY - hitboxHeight / 2;
+      const enemyBottom = ENEMY_Y + ENEMY_HITBOX.offsetY + hitboxHeight / 2;
 
       if (
         enemyRight > heroLeft &&
@@ -83,8 +91,8 @@ export const GameCanvas = () => {
 
   return (
     <Application
-      width={1200}
-      height={600}
+      width={CANVAS_WIDTH}
+      height={CANVAS_HEIGHT}
       className="border-2 border-[#596E84] rounded"
     >
       <GameContent />

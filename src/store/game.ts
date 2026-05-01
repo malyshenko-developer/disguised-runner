@@ -1,5 +1,12 @@
 import { create } from "zustand";
 
+import {
+  ENEMY_WIDTH,
+  ENEMY_HEIGHT,
+  ENEMY_SPAWN_X,
+  HERO_Y_BASE,
+} from "../config/gameConfig";
+
 export interface Enemy {
   id: number;
   x: number;
@@ -27,7 +34,7 @@ export const useGameStore = create<GameState>()((set, _get) => ({
   score: 0,
   gameOver: false,
   enemies: [],
-  heroY: 470,
+  heroY: HERO_Y_BASE,
 
   startGame: () =>
     set({
@@ -35,16 +42,16 @@ export const useGameStore = create<GameState>()((set, _get) => ({
       score: 0,
       gameOver: false,
       enemies: [],
-      heroY: 470,
+      heroY: HERO_Y_BASE,
     }),
   setGameOver: () =>
-    set({ gameRunning: false, gameOver: true, enemies: [], heroY: 470 }),
+    set({ gameRunning: false, gameOver: true, enemies: [], heroY: HERO_Y_BASE }),
   addScore: (points: number) =>
     set((state) => ({ score: state.score + points })),
   spawnEnemy: () => {
     const id = Date.now();
     set((state) => ({
-      enemies: [...state.enemies, { id, x: 1400, width: 64, height: 64 }],
+      enemies: [...state.enemies, { id, x: ENEMY_SPAWN_X, width: ENEMY_WIDTH, height: ENEMY_HEIGHT }],
     }));
   },
   updateEnemy: (id: number, x: number) => {

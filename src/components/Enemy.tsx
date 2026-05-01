@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { type AnimatedSprite, Assets, Rectangle, Texture } from "pixi.js";
 import { useTick } from "@pixi/react";
+
 import { useGameStore, type Enemy as IEnemy } from "../store/game.ts";
+
+import { ENEMY_SCALE, ENEMY_Y } from "../config/gameConfig.ts";
 
 interface EnemyProps {
   enemy: IEnemy;
@@ -54,9 +57,9 @@ export const Enemy = ({ enemy, onDestroy }: EnemyProps) => {
       animationSpeed={0.25}
       loop
       x={enemy.x}
-      y={520}
+      y={ENEMY_Y}
       anchor={0.5}
-      scale={1.4}
+      scale={ENEMY_SCALE}
     />
   );
 };

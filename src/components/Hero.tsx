@@ -4,6 +4,7 @@ import { type AnimatedSprite } from "pixi.js";
 import { useHeroPhysics } from "../hooks/hero/useHeroPhysics.ts";
 import { useGameStore } from "../store/game.ts";
 import { useHeroTextures } from "../hooks/hero/useHeroTextures.ts";
+import { HERO_X } from "../config/gameConfig.ts";
 
 export const Hero = () => {
   const [animState, setAnimState] = useState<"idle" | "prerun" | "run">("idle");
@@ -56,7 +57,7 @@ export const Hero = () => {
       textures={getTextures()}
       animationSpeed={0.2}
       loop={animState !== "prerun"}
-      x={600}
+      x={HERO_X}
       y={heroY}
       anchor={0.5}
       scale={0.4}
