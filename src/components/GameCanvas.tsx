@@ -10,12 +10,14 @@ import { useGameStore } from "../store/game.ts";
 
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../config/gameConfig.ts";
 import { useCollisionDetection } from "../hooks/useCollisionDetection.ts";
+import { useScoreTimer } from "../hooks/useScoreTimer.ts";
 import { GameOverOverlay } from "./GameOverOverlay.tsx";
 
 const GameContent = () => {
   const { gameRunning, enemies } = useGameStore();
 
   useCollisionDetection();
+  useScoreTimer();
 
   return (
     <>
