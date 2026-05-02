@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useGameStore } from "../store/game";
 
 export const GameOverOverlay = () => {
-  const { gameOver, closeGameOver, score } = useGameStore();
+  const { gameOver, closeGameOver, score, highScore } = useGameStore();
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
 
@@ -64,7 +64,9 @@ export const GameOverOverlay = () => {
 
         <h2 className="text-3xl font-bold text-white mb-4">Game Over</h2>
         <div className="text-5xl font-black text-indigo-400 my-3">{score}</div>
-        <div className="text-lg text-gray-400">🏆 The Best Score: {3000}</div>
+        <div className="text-lg text-gray-400">
+          🏆 The Best Score: {highScore}
+        </div>
         <p className="mt-4 text-sm text-gray-500">Close to continue</p>
       </div>
     </div>
