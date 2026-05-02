@@ -6,12 +6,14 @@ import { ParallaxBg } from "./ParallaxBg.tsx";
 import { Enemy } from "./Enemy.tsx";
 
 import { useGameStore } from "../store/game.ts";
-
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../config/gameConfig.ts";
+
 import { useCollisionDetection } from "../hooks/useCollisionDetection.ts";
 import { useScoreTimer } from "../hooks/useScoreTimer.ts";
+
 import { GameOverOverlay } from "./GameOverOverlay.tsx";
 import { PlayButton } from "./PlayButton.tsx";
+import { TopBar } from "./TopBar.tsx";
 
 const GameContent = () => {
   const { enemies } = useGameStore();
@@ -31,7 +33,7 @@ const GameContent = () => {
 };
 
 export const GameCanvas = () => {
-  const { gameRunning, spawnEnemy, score, highScore } = useGameStore();
+  const { gameRunning, spawnEnemy } = useGameStore();
 
   useEffect(() => {
     if (!gameRunning) return;
@@ -42,17 +44,7 @@ export const GameCanvas = () => {
 
   return (
     <div className="relative w-fit h-fit">
-      <div className="absolute top-0 left-0 w-full flex justify-between items-start p-4 pointer-events-none z-10">
-        <div className="pointer-events-auto"></div>
-        <div className="flex gap-4 bg-black/40 backdrop-blur-sm rounded-full px-5 py-2 border border-white/20 shadow-lg items-center">
-          <span className="text-white font-mono font-bold tracking-wider">
-            ✨{score}
-          </span>
-          <span className="text-white/70 font-mono text-sm">
-            Best: {highScore}
-          </span>
-        </div>
-      </div>
+      <TopBar />
 
       <PlayButton />
 
