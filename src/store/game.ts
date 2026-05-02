@@ -27,6 +27,7 @@ interface GameState {
   removeEnemy: (id: number) => void;
   heroY: number;
   updateHeroY: (y: number) => void;
+  closeGameOver: () => void;
 }
 
 export const useGameStore = create<GameState>()((set, _get) => ({
@@ -45,13 +46,22 @@ export const useGameStore = create<GameState>()((set, _get) => ({
       heroY: HERO_Y_BASE,
     }),
   setGameOver: () =>
-    set({ gameRunning: false, gameOver: true, enemies: [], heroY: HERO_Y_BASE }),
+    set({
+      gameRunning: false,
+      gameOver: true,
+      enemies: [],
+      heroY: HERO_Y_BASE,
+    }),
+  closeGameOver: () => set({ gameOver: false }),
   addScore: (points: number) =>
     set((state) => ({ score: state.score + points })),
   spawnEnemy: () => {
     const id = Date.now();
     set((state) => ({
-      enemies: [...state.enemies, { id, x: ENEMY_SPAWN_X, width: ENEMY_WIDTH, height: ENEMY_HEIGHT }],
+      enemies: [
+        ...state.enemies,
+        { id, x: ENEMY_SPAWN_X, width: ENEMY_WIDTH, height: ENEMY_HEIGHT },
+      ],
     }));
   },
   updateEnemy: (id: number, x: number) => {
