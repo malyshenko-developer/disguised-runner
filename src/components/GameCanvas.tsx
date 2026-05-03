@@ -10,6 +10,7 @@ import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../config/gameConfig.ts";
 
 import { useCollisionDetection } from "../hooks/useCollisionDetection.ts";
 import { useScoreTimer } from "../hooks/useScoreTimer.ts";
+import { useBackgroundMusic } from "../hooks/sound/useBackgroundMusic.ts";
 
 import { GameOverOverlay } from "./GameOverOverlay.tsx";
 import { PlayButton } from "./PlayButton.tsx";
@@ -20,6 +21,7 @@ const GameContent = () => {
 
   useCollisionDetection();
   useScoreTimer();
+  useBackgroundMusic();
 
   return (
     <>
