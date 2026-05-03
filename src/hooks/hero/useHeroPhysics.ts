@@ -13,6 +13,7 @@ interface UseHeroPhysicsReturn {
 export const useHeroPhysics = (
   running: boolean,
   onLanding: () => void,
+  onTouchGround: () => void,
 ): UseHeroPhysicsReturn => {
   const updateHeroY = useGameStore((state) => state.updateHeroY);
 
@@ -49,7 +50,7 @@ export const useHeroPhysics = (
     if (landingGrace.current > 0) {
       landingGrace.current -= ticker.deltaMS;
       if (landingGrace.current <= 0) {
-        onLanding()
+        onLanding();
         setJumpState("ground");
       }
       return;
@@ -77,6 +78,7 @@ export const useHeroPhysics = (
       physics.current.grounded = true;
       setHeroY(HERO_Y_BASE);
       updateHeroY(HERO_Y_BASE);
+      onTouchGround();
       landingGrace.current = 400;
       canJump.current = false;
       setJumpState("down");
@@ -93,7 +95,7 @@ export const useHeroPhysics = (
   };
 
   useEffect(() => {
-    resetPhysics()
+    resetPhysics();
   }, [running, updateHeroY]);
 
   const prerunCompleted = () => {

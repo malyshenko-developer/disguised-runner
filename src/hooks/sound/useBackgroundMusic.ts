@@ -13,7 +13,7 @@ export const useBackgroundMusic = () => {
         src: ["/music/lofi-cozy.mp3"],
         loop: true,
         autoplay: true,
-        volume: 0.4,
+        volume: 0.2,
       });
     }
   }, []);
