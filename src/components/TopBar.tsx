@@ -11,13 +11,13 @@ export const TopBar = () => {
       <div className="pointer-events-auto flex gap-2">
         <button
           onClick={toggleSound}
-          className="w-8 h-8 bg-black/40 backdrop-blur-sm rounded-full border border-white/20 shadow-[0_0_8px_rgba(255,255,255,0.2)] flex items-center justify-center text-white hover:bg-black/60 transition cursor-pointer"
+          className="w-12 h-12 bg-black/40 backdrop-blur-sm rounded-full border border-white/20 shadow-[0_0_8px_rgba(255,255,255,0.2)] flex items-center justify-center text-white hover:bg-black/60 transition cursor-pointer"
           aria-label="Toggle sound"
         >
           {soundEnabled ? (
-            <SoundOn className="w-5 h-5 fill-current" />
+            <SoundOn className="w-8 h-8 fill-current" />
           ) : (
-            <SoundOff className="w-5 h-5 fill-current" />
+            <SoundOff className="w-8 h-8 fill-current" />
           )}
         </button>
       </div>
