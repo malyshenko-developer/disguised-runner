@@ -30,6 +30,8 @@ interface GameState {
   removeEnemy: (id: number) => void;
   heroY: number;
   updateHeroY: (y: number) => void;
+  soundEnabled: boolean;
+  toggleSound: () => void;
 }
 
 export const useGameStore = create<GameState>()(
@@ -41,6 +43,7 @@ export const useGameStore = create<GameState>()(
       enemies: [],
       heroY: HERO_Y_BASE,
       highScore: 0,
+      soundEnabled: true,
 
       startGame: () =>
         set({
@@ -89,10 +92,16 @@ export const useGameStore = create<GameState>()(
       },
 
       updateHeroY: (y: number) => set({ heroY: y }),
+
+      toggleSound: () =>
+        set((state) => ({ soundEnabled: !state.soundEnabled })),
     }),
     {
       name: "game-storage",
-      partialize: (state) => ({ highScore: state.highScore }),
+      partialize: (state) => ({
+        highScore: state.highScore,
+        soundEnabled: state.soundEnabled,
+      }),
     },
   ),
 );
