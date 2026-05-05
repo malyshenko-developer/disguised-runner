@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { type AnimatedSprite } from "pixi.js";
+import { useApplication } from "@pixi/react";
+
 import { useHeroPhysics } from "../hooks/hero/useHeroPhysics";
 import { useHeroTextures } from "../hooks/hero/useHeroTextures";
 import { useHeroSounds } from "../hooks/hero/useHeroSounds";
+import { useDustParticles } from "../hooks/hero/useDustParticles.ts";
+
 import { useGameStore } from "../store/game";
 import { HERO_X } from "../config/gameConfig";
 
@@ -14,10 +18,16 @@ export const Hero = () => {
 
   const textures = useHeroTextures();
   const { playJump, playLand } = useHeroSounds();
+  const { app } = useApplication();
+
+  const spawnDust = useDustParticles(app);
 
   const onTouchGround = useCallback(() => {
     playLand();
-  }, [playLand]);
+    if (spriteRef.current) {
+      spawnDust(spriteRef.current.x, spriteRef.current.y + 80);
+    }
+  }, [playLand, spawnDust]);
 
   const onLanding = useCallback(() => {
     setAnimState("prerun");
@@ -33,9 +43,12 @@ export const Hero = () => {
   useEffect(() => {
     if (jumpState === "up" && prevJumpState.current !== "up") {
       playJump();
+      if (spriteRef.current) {
+        spawnDust(spriteRef.current.x, spriteRef.current.y + 60);
+      }
     }
     prevJumpState.current = jumpState;
-  }, [jumpState, playJump]);
+  }, [jumpState, playJump, spawnDust]);
 
   useEffect(() => {
     if (gameRunning && animState === "idle") {
