@@ -13,6 +13,7 @@ import { HERO_X } from "../config/gameConfig";
 export const Hero = () => {
   const [animState, setAnimState] = useState<"idle" | "prerun" | "run">("idle");
   const spriteRef = useRef<AnimatedSprite>(null);
+  const slowmoTimerRef = useRef<number | null>(null);
 
   const { gameRunning } = useGameStore();
 
@@ -27,6 +28,16 @@ export const Hero = () => {
     if (spriteRef.current) {
       spawnDust(spriteRef.current.x, spriteRef.current.y + 80);
     }
+
+    const { setGameSpeedMultiplier } = useGameStore.getState();
+    setGameSpeedMultiplier(0.4);
+
+    if (slowmoTimerRef.current) {
+      clearTimeout(slowmoTimerRef.current);
+    }
+    slowmoTimerRef.current = setTimeout(() => {
+      setGameSpeedMultiplier(1);
+    }, 500);
   }, [playLand, spawnDust]);
 
   const onLanding = useCallback(() => {

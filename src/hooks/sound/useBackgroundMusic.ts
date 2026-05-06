@@ -12,7 +12,7 @@ export const useBackgroundMusic = () => {
       soundRef.current = new Howl({
         src: ["/music/lofi-cozy.mp3"],
         loop: true,
-        autoplay: true,
+        autoplay: false,
         volume: 0.2,
       });
     }
@@ -21,15 +21,10 @@ export const useBackgroundMusic = () => {
   useEffect(() => {
     const sound = soundRef.current;
     if (!sound) return;
-
     if (soundEnabled) {
-      if (!sound.playing()) {
-        sound.play();
-      }
+      if (!sound.playing()) sound.play();
     } else {
-      if (sound.playing()) {
-        sound.pause();
-      }
+      if (sound.playing()) sound.pause();
     }
   }, [soundEnabled]);
 
