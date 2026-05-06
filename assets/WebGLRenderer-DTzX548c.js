@@ -1,1 +1,0 @@
-import{r as e}from"./index-BcqmSwkX.js";export{e as WebGLRenderer};
