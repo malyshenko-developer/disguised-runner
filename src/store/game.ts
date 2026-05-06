@@ -32,6 +32,8 @@ interface GameState {
   updateHeroY: (y: number) => void;
   soundEnabled: boolean;
   toggleSound: () => void;
+  gameSpeedMultiplier: number;
+  setGameSpeedMultiplier: (multi: number) => void;
 }
 
 export const useGameStore = create<GameState>()(
@@ -44,6 +46,7 @@ export const useGameStore = create<GameState>()(
       heroY: HERO_Y_BASE,
       highScore: 0,
       soundEnabled: true,
+      gameSpeedMultiplier: 1,
 
       startGame: () =>
         set({
@@ -52,6 +55,7 @@ export const useGameStore = create<GameState>()(
           gameOver: false,
           enemies: [],
           heroY: HERO_Y_BASE,
+          gameSpeedMultiplier: 1,
         }),
 
       setGameOver: () =>
@@ -95,6 +99,9 @@ export const useGameStore = create<GameState>()(
 
       toggleSound: () =>
         set((state) => ({ soundEnabled: !state.soundEnabled })),
+
+      setGameSpeedMultiplier: (multi: number) =>
+        set({ gameSpeedMultiplier: multi }),
     }),
     {
       name: "game-storage",
