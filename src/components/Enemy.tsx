@@ -1,32 +1,33 @@
 import { useEffect, useRef } from "react";
 import { type AnimatedSprite } from "pixi.js";
 
-import { type Enemy as IEnemy } from "../store/game.ts";
-
-import { ENEMY_SCALE, ENEMY_Y } from "../config/gameConfig.ts";
-import { useEnemyTextures } from "../hooks/enemy/useEnemyTextures.ts";
 import { useEnemyMovement } from "../hooks/enemy/useEnemyMovement.ts";
+
+import { type Enemy as IEnemy } from "../store/game.ts";
+import { ENEMY_SCALE, ENEMY_Y } from "../config/gameConfig.ts";
+import { useAssetStore } from "../store/assetStore.ts";
 
 interface EnemyProps {
   enemy: IEnemy;
 }
 
 export const Enemy = ({ enemy }: EnemyProps) => {
-  const textures = useEnemyTextures()
   const spriteRef = useRef<AnimatedSprite>(null);
+
+  const { enemyTextures } = useAssetStore();
 
   useEnemyMovement(enemy);
 
   useEffect(() => {
     spriteRef.current?.play();
-  }, [textures.length]);
+  }, [enemyTextures.length]);
 
-  if (textures.length === 0) return null;
+  if (enemyTextures.length === 0) return null;
 
   return (
     <pixiAnimatedSprite
       ref={spriteRef}
-      textures={textures}
+      textures={enemyTextures}
       animationSpeed={0.25}
       loop
       x={enemy.x}

@@ -10,7 +10,7 @@ export const useBackgroundMusic = () => {
   useEffect(() => {
     if (!soundRef.current) {
       soundRef.current = new Howl({
-        src: ["/music/lofi-cozy.mp3"],
+        src: ["music/lofi-cozy.mp3"],
         loop: true,
         autoplay: false,
         volume: 0.2,

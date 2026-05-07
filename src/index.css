@@ -14,3 +14,7 @@
 .animate-fade-in-scale {
     animation: fadeInScale 0.2s ease-out forwards;
 }
+
+canvas {
+    background-color: #1a2336;
+}
