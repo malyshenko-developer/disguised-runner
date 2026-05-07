@@ -10,16 +10,14 @@ export const useHeroTextures = () => {
       for (let i = 1; i <= 24; i++) {
         const padded = i.toString().padStart(5, "0");
 
-        promises.push(
-          Assets.load(`/sprites/disguised/idle/idle_${padded}.png`),
-        );
+        promises.push(Assets.load(`sprites/disguised/idle/idle_${padded}.png`));
       }
 
       for (let i = 1; i <= 5; i++) {
         const padded = i.toString().padStart(5, "0");
 
         promises.push(
-          Assets.load(`/sprites/disguised/run/prerun/prerun_${padded}.png`),
+          Assets.load(`sprites/disguised/run/prerun/prerun_${padded}.png`),
         );
       }
 
@@ -27,7 +25,7 @@ export const useHeroTextures = () => {
         const padded = i.toString().padStart(5, "0");
 
         promises.push(
-          Assets.load(`/sprites/disguised/run/runloop/run_${padded}.png`),
+          Assets.load(`sprites/disguised/run/runloop/run_${padded}.png`),
         );
       }
 

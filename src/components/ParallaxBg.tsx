@@ -29,7 +29,7 @@ export const ParallaxBg = () => {
 
   useEffect(() => {
     BACKGROUND_LAYERS.forEach((name) => {
-      Assets.load(`/sprites/background/${name}.png`).then((texture) => {
+      Assets.load(`sprites/background/${name}.png`).then((texture) => {
         setTextures((prev) => ({ ...prev, [name]: texture }));
       });
     });
