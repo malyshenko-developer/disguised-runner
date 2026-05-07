@@ -6,11 +6,13 @@ import { ParallaxBg } from "./ParallaxBg.tsx";
 import { Enemy } from "./Enemy.tsx";
 
 import { useGameStore } from "../store/game.ts";
+import { useAssetStore } from "../store/assetStore.ts";
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../config/gameConfig.ts";
 
 import { useCollisionDetection } from "../hooks/useCollisionDetection.ts";
 import { useScoreTimer } from "../hooks/useScoreTimer.ts";
 import { useBackgroundMusic } from "../hooks/sound/useBackgroundMusic.ts";
+import { useAssetLoader } from "../hooks/useAssetLoader.ts";
 
 import { GameOverOverlay } from "./GameOverOverlay.tsx";
 import { PlayButton } from "./PlayButton.tsx";
@@ -36,6 +38,9 @@ const GameContent = () => {
 
 export const GameCanvas = () => {
   const { gameRunning, spawnEnemy } = useGameStore();
+  const { assetsLoaded } = useAssetStore();
+
+  useAssetLoader();
 
   useEffect(() => {
     if (!gameRunning) return;
@@ -44,15 +49,22 @@ export const GameCanvas = () => {
     return () => clearInterval(id);
   }, [gameRunning, spawnEnemy]);
 
+  if (!assetsLoaded) {
+    return (
+      <div className="w-[1200px] h-[600px] bg-gray-900 flex items-center justify-center text-white text-xl rounded">
+        Loading assets... 🎮
+      </div>
+    );
+  }
+
   return (
-    <div className="relative w-fit h-fit">
+    <div className="relative w-[1200px] h-[600px] bg-gray-900">
       <TopBar />
-
       <PlayButton />
-
       <Application
         width={CANVAS_WIDTH}
         height={CANVAS_HEIGHT}
+        backgroundColor={0x1a2336}
         className="border-2 border-[#596E84] rounded"
       >
         <GameContent />

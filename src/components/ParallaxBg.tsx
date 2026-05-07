@@ -1,39 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTick } from "@pixi/react";
-import { Assets, Texture } from "pixi.js";
 
 import { useGameStore } from "../store/game";
+import { useAssetStore } from "../store/assetStore";
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../config/gameConfig";
+
+import { paths } from "../assets/assetsPaths";
 
 const PARALLAX_SPEED_FACTOR = 2;
 const PARALLAX_TILE_Y = 620;
-const BACKGROUND_LAYERS = [
-  "Layer_0011_0",
-  "Layer_0010_1",
-  "Layer_0009_2",
-  "Layer_0008_3",
-  "Layer_0007_Lights",
-  "Layer_0006_4",
-  "Layer_0005_5",
-  "Layer_0004_Lights",
-  "Layer_0003_6",
-  "Layer_0002_7",
-  "Layer_0001_8",
-  "Layer_0000_9",
-];
+
+const getFileName = (url: string) => {
+  const parts = url.split("/");
+  const file = parts.pop() || "";
+  return file.replace(".png", "");
+};
 
 export const ParallaxBg = () => {
   const { gameRunning, gameSpeedMultiplier } = useGameStore();
+  const { backgroundTextures } = useAssetStore();
   const [scrollX, setScrollX] = useState(0);
-  const [textures, setTextures] = useState<Record<string, Texture>>({});
-
-  useEffect(() => {
-    BACKGROUND_LAYERS.forEach((name) => {
-      Assets.load(`sprites/background/${name}.png`).then((texture) => {
-        setTextures((prev) => ({ ...prev, [name]: texture }));
-      });
-    });
-  }, []);
 
   useTick((ticker) => {
     if (gameRunning) {
@@ -46,8 +32,9 @@ export const ParallaxBg = () => {
 
   return (
     <>
-      {BACKGROUND_LAYERS.map((name, index) => {
-        const texture = textures[name];
+      {paths.background.map((url, index) => {
+        const name = getFileName(url);
+        const texture = backgroundTextures[name];
         if (!texture) return null;
         const speed = index * 0.08;
         return (

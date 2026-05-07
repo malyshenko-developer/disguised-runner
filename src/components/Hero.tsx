@@ -2,13 +2,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { type AnimatedSprite } from "pixi.js";
 import { useApplication } from "@pixi/react";
 
-import { useHeroPhysics } from "../hooks/hero/useHeroPhysics";
-import { useHeroTextures } from "../hooks/hero/useHeroTextures";
 import { useHeroSounds } from "../hooks/hero/useHeroSounds";
 import { useDustParticles } from "../hooks/hero/useDustParticles.ts";
+import { useHeroPhysics } from "../hooks/hero/useHeroPhysics.ts";
 
 import { useGameStore } from "../store/game";
 import { HERO_X } from "../config/gameConfig";
+import { useAssetStore } from "../store/assetStore.ts";
 
 export const Hero = () => {
   const [animState, setAnimState] = useState<"idle" | "prerun" | "run">("idle");
@@ -16,8 +16,8 @@ export const Hero = () => {
   const slowmoTimerRef = useRef<number | null>(null);
 
   const { gameRunning } = useGameStore();
+  const { heroTextures } = useAssetStore();
 
-  const textures = useHeroTextures();
   const { playJump, playLand } = useHeroSounds();
   const { app } = useApplication();
 
@@ -79,17 +79,17 @@ export const Hero = () => {
 
   useEffect(() => {
     spriteRef.current?.play();
-  }, [textures.length, animState, jumpState]);
+  }, [heroTextures.length, animState, jumpState]);
 
   const getTextures = () => {
-    if (animState === "idle") return textures.slice(0, 24);
-    if (animState === "prerun") return textures.slice(24, 29);
-    if (jumpState === "ground") return textures.slice(29, 42);
-    if (jumpState === "up") return textures.slice(42, 54);
-    return textures.slice(54);
+    if (animState === "idle") return heroTextures.slice(0, 24);
+    if (animState === "prerun") return heroTextures.slice(24, 29);
+    if (jumpState === "ground") return heroTextures.slice(29, 42);
+    if (jumpState === "up") return heroTextures.slice(42, 54);
+    return heroTextures.slice(54);
   };
 
-  if (textures.length === 0) return null;
+  if (heroTextures.length === 0) return null;
 
   return (
     <pixiAnimatedSprite

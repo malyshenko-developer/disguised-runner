@@ -11,13 +11,13 @@ export const useHeroSounds = () => {
   useEffect(() => {
     if (!jumpSound.current) {
       jumpSound.current = new Howl({
-        src: ["/music/jump.mp3"],
+        src: ["music/jump.mp3"],
         volume: 0.8,
       });
     }
     if (!landSound.current) {
       landSound.current = new Howl({
-        src: ["/music/land.mp3"],
+        src: ["music/land.mp3"],
         volume: 0.6,
       });
     }
