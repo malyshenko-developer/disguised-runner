@@ -52,7 +52,9 @@ export const useAssetLoader = () => {
       }
       setEnemyTextures(enemyFrames);
 
-      setAssetsLoaded(true);
+      setTimeout(() => {
+        setAssetsLoaded(true);
+      }, 1000);
     };
 
     loadAll();

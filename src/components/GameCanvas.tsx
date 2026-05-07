@@ -51,8 +51,13 @@ export const GameCanvas = () => {
 
   if (!assetsLoaded) {
     return (
-      <div className="w-[1200px] h-[600px] bg-gray-900 flex items-center justify-center text-white text-xl rounded">
-        Loading assets... 🎮
+      <div
+        className={
+          "w-[1200px] h-[600px] bg-gray-900 flex flex-col items-center justify-center text-white text-xl rounded"
+        }
+      >
+        <div className="animate-pulse">Loading assets... 🎮</div>
+        <div className="mt-4 w-8 h-8 border-4 border-t-[#2CA9BC] border-gray-600 rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -65,7 +70,7 @@ export const GameCanvas = () => {
         width={CANVAS_WIDTH}
         height={CANVAS_HEIGHT}
         backgroundColor={0x1a2336}
-        className="border-2 border-[#596E84] rounded"
+        className="border-2 border-[#596E84] rounded w-[1200px] h-[600px] bg-gray-900"
       >
         <GameContent />
       </Application>
